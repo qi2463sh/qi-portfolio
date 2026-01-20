@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState, useId } from "react";
 import Image from "next/image";
 
 const THUMB_COL_W = 200;
@@ -28,122 +29,178 @@ type WorkItemType = {
 
 function WorkItem({ item }: { item: WorkItemType }) {
   const hasDetails = Boolean(item.details);
+  const [imgOpen, setImgOpen] = useState(false);
+
+  // Unique ids for aria
+  const dialogId = useId();
 
   return (
-    <details className="group rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-black">
-      <summary className="cursor-pointer list-none">
-        <div className="grid gap-4 md:grid-cols-[200px,1fr] md:items-start">
-          <div
-            className="overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-black"
-            style={{ width: THUMB_COL_W }}
-          >
-            <Image
-              src={item.thumbSrc}
-              alt={item.imageAlt}
-              width={item.thumbW ?? 1200}
-              height={item.thumbH ?? 900}
-              className="h-auto w-full object-cover"
-              priority={item.title.includes("Instrument Control")}
-            />
-          </div>
+    <>
+      <details className="group rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-black">
+        <summary className="cursor-pointer list-none">
+          <div className="grid gap-4 md:grid-cols-[200px,1fr] md:items-start">
+            {/* Thumbnail (click to zoom) */}
+            <div
+              className="relative overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-black"
+              style={{ width: THUMB_COL_W }}
+            >
+              {/* Click layer: stop summary toggle, open modal */}
+              <button
+                type="button"
+                aria-label="Open image"
+                className="group/thumb relative block w-full cursor-zoom-in"
+                onClick={(e) => {
+                  e.preventDefault(); // prevent <summary> default toggle
+                  e.stopPropagation(); // prevent <details> toggle
+                  setImgOpen(true);
+                }}
+              >
+                <Image
+                  src={item.thumbSrc}
+                  alt={item.imageAlt}
+                  width={600}
+                  height={450}
+                  sizes="(min-width: 768px) 200px, 100vw"
+                  className="h-auto w-full object-cover transition-transform duration-200 group-hover/thumb:scale-[1.02]"
+                />
 
-          <div className="min-w-0">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full border border-zinc-200 bg-white px-2 py-0.5 text-[11px] font-medium text-zinc-700 dark:border-zinc-800 dark:bg-black dark:text-zinc-300">
-                    Project
-                  </span>
-                  {item.badge && (
+                {/* Subtle zoom hint */}
+                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover/thumb:opacity-100">
+                  <div className="absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-0.5 text-[11px] text-white">
+                    Click to zoom
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            <div className="min-w-0">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="rounded-full border border-zinc-200 bg-white px-2 py-0.5 text-[11px] font-medium text-zinc-700 dark:border-zinc-800 dark:bg-black dark:text-zinc-300">
-                      {item.badge}
+                      Project
                     </span>
+                    {item.badge && (
+                      <span className="rounded-full border border-zinc-200 bg-white px-2 py-0.5 text-[11px] font-medium text-zinc-700 dark:border-zinc-800 dark:bg-black dark:text-zinc-300">
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="mt-2 text-base font-semibold leading-snug">{item.title}</div>
+
+                  {item.subtitle && (
+                    <div className="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                      {item.subtitle}
+                    </div>
+                  )}
+
+                  {item.links && item.links.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm">
+                      {item.links.map((l) => (
+                        <a
+                          key={l.href}
+                          href={l.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-blue-700 hover:underline dark:text-blue-400"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {l.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+
+                  {item.introPoints && item.introPoints.length > 0 && (
+                    <ul className="mt-2 space-y-1 text-sm leading-6 text-zinc-700 dark:text-zinc-300">
+                      {item.introPoints.map((p) => (
+                        <li key={p}>• {p}</li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {item.tags && item.tags.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {item.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="rounded-full border border-zinc-200 px-2 py-0.5 text-[11px] text-zinc-700 dark:border-zinc-800 dark:text-zinc-300"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   )}
                 </div>
 
-                <div className="mt-2 text-base font-semibold leading-snug">{item.title}</div>
-
-                {item.subtitle && (
-                  <div className="mt-1 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                    {item.subtitle}
-                  </div>
-                )}
-
-                {item.links && item.links.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm">
-                    {item.links.map((l) => (
-                      <a
-                        key={l.href}
-                        href={l.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-blue-700 hover:underline dark:text-blue-400"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {l.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
-
-                {item.introPoints && item.introPoints.length > 0 && (
-                  <ul className="mt-2 space-y-1 text-sm leading-6 text-zinc-700 dark:text-zinc-300">
-                    {item.introPoints.map((p) => (
-                      <li key={p}>• {p}</li>
-                    ))}
-                  </ul>
-                )}
-
-                {item.tags && item.tags.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {item.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-zinc-200 px-2 py-0.5 text-[11px] text-zinc-700 dark:border-zinc-800 dark:text-zinc-300"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="shrink-0 pt-1 text-sm text-zinc-500">
-                <span className="group-open:hidden">Expand</span>
-                <span className="hidden group-open:inline">Collapse</span>
+                <div className="shrink-0 pt-1 text-sm text-zinc-500">
+                  <span className="group-open:hidden">Expand</span>
+                  <span className="hidden group-open:inline">Collapse</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </summary>
+        </summary>
 
-      {hasDetails && (
-        <div className="mt-5 border-t border-zinc-200 pt-5 dark:border-zinc-800">
-          <div className="space-y-4 rounded-xl border border-zinc-200 bg-white p-4 text-sm leading-6 text-zinc-700 dark:border-zinc-800 dark:bg-black dark:text-zinc-300">
-            {item.details}
+        {hasDetails && (
+          <div className="mt-5 border-t border-zinc-200 pt-5 dark:border-zinc-800">
+            <div className="space-y-4 rounded-xl border border-zinc-200 bg-white p-4 text-sm leading-6 text-zinc-700 dark:border-zinc-800 dark:bg-black dark:text-zinc-300">
+              {item.details}
 
-            {item.references && item.references.length > 0 && (
-              <div className="pt-1">
-                <div className="font-semibold">References</div>
-                <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
-                  {item.references.map((r) => (
-                    <a
-                      key={r.href}
-                      href={r.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-blue-700 hover:underline dark:text-blue-400"
-                    >
-                      {r.label}
-                    </a>
-                  ))}
+              {item.references && item.references.length > 0 && (
+                <div className="pt-1">
+                  <div className="font-semibold">References</div>
+                  <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1">
+                    {item.references.map((r) => (
+                      <a
+                        key={r.href}
+                        href={r.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-700 hover:underline dark:text-blue-400"
+                      >
+                        {r.label}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
+          </div>
+        )}
+      </details>
+
+      {/* Lightbox: click once to open, click outside to close */}
+      {imgOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={dialogId}
+          onClick={() => setImgOpen(false)} // click blank area closes
+        >
+          <div
+            className="relative max-h-[90vh] max-w-[90vw] cursor-zoom-out"
+            onClick={(e) => e.stopPropagation()} // click on image container does NOT close
+          >
+            {/* Hidden label for screen readers */}
+            <div id={dialogId} className="sr-only">
+              {item.title} image
+            </div>
+
+            <Image
+              src={item.thumbSrc}
+              alt={item.imageAlt}
+              width={1600}
+              height={1200}
+              className="h-auto w-full rounded-xl bg-white shadow-2xl"
+              priority
+            />
           </div>
         </div>
       )}
-    </details>
+    </>
   );
 }
 
@@ -539,7 +596,7 @@ export default function Home() {
             <div className="mt-2 grid gap-2 sm:grid-cols-2 text-zinc-700 dark:text-zinc-300">
               <div>• 26+ peer-reviewed publications</div>
               <div>• h-index 16 · i10-index 20</div>
-              <div>• 896+ citations (Jan 2026)</div>
+              <div>• 900+ citations (Jan 2026)</div>
               <div>
                 • Full list:{" "}
                 <a className="underline" href="https://scholar.google.com/citations?user=rlOFcsMAAAAJ&hl=en&oi=ao" target="_blank" rel="noreferrer">
