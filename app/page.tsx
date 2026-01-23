@@ -206,19 +206,20 @@ function WorkItem({ item }: { item: WorkItemType }) {
 
 export default function Home() {
   const highlights = [
-    {
-      title: "Imaging systems → reliable software",
-      desc: "Built end-to-end pipelines for nonlinear optical imaging: calibration, acquisition, preprocessing, modeling, and visualization—designed for repeated use by collaborators.",
-    },
-    {
-      title: "Machine learning with interpretability",
-      desc: "Combine physical constraints with supervised ML for robust parameter inference, validation, and failure-mode analysis (not black-box demos).",
-    },
-    {
-      title: "Performance & reproducibility",
-      desc: "GPU/HPC workflows (e.g., SLURM), experiment tracking, and structured outputs to make results repeatable and debugging practical.",
-    },
-  ];
+  {
+    title: "Optical imaging systems built for daily use",
+    desc: "Designed and maintained intensity-modulated nonlinear microscopy workflows (IM-2PM / IM-2PEF), including synchronized acquisition, calibration routines, and robust signal readout.",
+  },
+  {
+    title: "From raw measurements to validated physical parameters",
+    desc: "Built end-to-end analysis pipelines: preprocessing, modulation-domain features, ODE/kinetic modeling, and ML-assisted inference—focused on interpretability, validation, and failure-mode detection.",
+  },
+  {
+    title: "Engineering mindset: stability, debugging, and reproducibility",
+    desc: "Implemented guardrails, structured outputs, and repeatable runs for long experiments; integrated multi-instrument control and kept the software maintainable for collaborators over years.",
+  },
+];
+
 
   const education = [
     {
@@ -251,25 +252,28 @@ export default function Home() {
 
   const grants = [
     {
-      year: "2018",
+      year: "2025",
       title:
-        "Research grant (Fysiografiska): Mapping spatial distribution of large polarons in hybrid perovskites using temperature-dependent PL & photocurrent imaging",
-    },
-    { year: "2019", title: "Travel grant (Fysiografiska): ICMAT 2019, Singapore" },
-    {
-      year: "2023",
-      title:
-        "Young Investigator Synergy Award (Light & Materials profile): Sustainable GaInP nanowire micro-LEDs with AI-enhanced functional imaging",
+        "Young Investigator Synergy Award (Light & Materials profile): Charge dynamics in lead-free perovskite nanocrystals with single-atom cocatalysts for CO₂ photoreduction",
     },
     {
       year: "2024",
       title: "Travel grant (Lund University): Nordic-Baltic Femtochemistry Conference 2024",
     },
     {
-      year: "2025",
+      year: "2023",
       title:
-        "Young Investigator Synergy Award (Light & Materials profile): Charge dynamics in lead-free perovskite nanocrystals with single-atom cocatalysts for CO₂ photoreduction",
+        "Young Investigator Synergy Award (Light & Materials profile): Sustainable GaInP nanowire micro-LEDs with AI-enhanced functional imaging",
     },
+     { year: "2019", title: "Travel grant (Fysiografiska): ICMAT 2019, Singapore" },
+        {
+      year: "2018",
+      title:
+        "Research grant (Fysiografiska): Mapping spatial distribution of large polarons in hybrid perovskites using temperature-dependent PL & photocurrent imaging",
+    },
+   
+    
+    
   ];
 
   const talks = [
@@ -327,6 +331,179 @@ export default function Home() {
       ),
     },
 
+        {
+      title: "Intensity-Modulated Two-Photon Excited Photoluminescence Microscopy (IM-2PM)",
+      subtitle:
+        "Technique development: modulation-domain readout for background suppression and quantitative contrast in nonlinear microscopy.",
+      thumbSrc: "/work/im2pef-thumb.jpg",
+      imageAlt: "IM-2PEF intensity-modulated two-photon excited photoluminescence microscopy",
+      badge: "Paper",
+      introPoints: [
+        "Core technique: intensity modulation of femtosecond pulse train + demodulation in the detection chain.",
+        "Enables robust contrast extraction under drift/noise; improves interpretability of nonlinear signals.",
+        "Forms the foundation for later IM-2PM / functional imaging pipelines.",
+      ],
+      tags: ["Nonlinear microscopy", "Modulation", "Signal processing", "IM-2PM"],
+      links: [
+        { label: "ACS Phys. Chem. Au (Paper)", href: "https://pubs.acs.org/doi/full/10.1021/acsphyschemau.3c00013" },
+        { label: "J. Phys. Chem. C (Paper)", href: "https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b01968" },
+      ],
+      references: [
+        { label: "ACS Phys. Chem. Au", href: "https://pubs.acs.org/doi/full/10.1021/acsphyschemau.3c00013" },
+        { label: "J. Phys. Chem. C", href: "https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.9b01968" },
+      ],
+      details: (
+        <div className="space-y-4">
+          <div>
+            <strong>Focus:</strong> Intensity-modulated two-photon excited fluorescence microscopy — using modulation
+            and demodulation to extract robust contrast from nonlinear optical signals.
+          </div>
+
+          <div>
+            <strong>What the work demonstrates:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• Modulation-domain readout to separate meaningful signal from low-frequency drift and noise.</li>
+              <li>• Practical measurement strategy that improves repeatability for long experiments.</li>
+              <li>• A technique foundation that later enables functional imaging and quantitative inference.</li>
+            </ul>
+          </div>
+
+          <div>
+            <strong>My contributions (high level):</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• Implemented the end-to-end measurement/analysis workflow (acquisition → demodulation → validation).</li>
+              <li>• Built software routines to make the method reusable and stable in day-to-day experiments.</li>
+            </ul>
+          </div>
+        </div>
+      ),
+    },
+
+
+        {
+      title: "Simultaneous Photocurrent (PC) + Photoluminescence (PL) Imaging under Intensity Modulation",
+      subtitle:
+        "Correlated PC/PL imaging to link transport and radiative recombination pathways in semiconductor devices.",
+      thumbSrc: "/work/pcpl-thumb.jpg",
+      imageAlt: "Simultaneous intensity-modulated PC and PL imaging",
+      badge: "Paper",
+      introPoints: [
+        "Simultaneous PC + PL acquisition to correlate electronic transport with optical response.",
+        "Intensity modulation improves SNR and enables robust contrast extraction.",
+        "Useful for diagnosing losses, spatial heterogeneity, and device-level behavior.",
+      ],
+      tags: ["PC imaging", "PL imaging", "Modulation", "Semiconductors", "Correlative imaging"],
+      links: [{ label: "Paper", href: "https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.8b00542" }],
+      references: [{ label: "J. Phys. Chem. C", href: "https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.8b00542" }],
+      details: (
+        <div className="space-y-4">
+          <div>
+            <strong>Problem:</strong> PC and PL probe different parts of device physics. Measuring them separately makes
+            it hard to interpret spatial heterogeneity and loss channels.
+          </div>
+
+          <div>
+            <strong>What this work provides:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• A simultaneous imaging strategy (PC + PL) for more direct correlation.</li>
+              <li>• Modulation-based readout to improve robustness against drift/noise.</li>
+              <li>• Spatial maps that help connect micro-scale heterogeneity to device-level performance.</li>
+            </ul>
+          </div>
+
+          <div>
+            <strong>My contributions (high level):</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• Built/maintained the measurement workflow and analysis routines for reliable map generation.</li>
+              <li>• Ensured repeatable acquisition and clean data outputs for downstream interpretation.</li>
+            </ul>
+          </div>
+        </div>
+      ),
+    },
+
+
+        {
+      title: "Photocurrent (PC) Imaging for Spatially Resolved Device Diagnostics",
+      subtitle:
+        "PC mapping to visualize transport bottlenecks, contact issues, and spatial heterogeneity in semiconductor devices.",
+      thumbSrc: "/work/pc-thumb.jpg",
+      imageAlt: "Photocurrent imaging (PC) map",
+      badge: "Paper",
+      introPoints: [
+        "PC imaging provides direct spatial readout of charge extraction/transport behavior.",
+        "Enables identification of bottlenecks and non-uniformity that are not obvious in bulk measurements.",
+        "Complements PL-based imaging for more complete interpretation of device physics.",
+      ],
+      tags: ["PC imaging", "Device diagnostics", "Spatial mapping", "Semiconductors"],
+      links: [{ label: "Paper", href: "https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.8b02250" }],
+      references: [{ label: "J. Phys. Chem. Lett.", href: "https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.8b02250" }],
+      details: (
+        <div className="space-y-4">
+          <div>
+            <strong>Problem:</strong> Bulk electrical metrics hide local defects and spatial non-uniformity that dominate
+            real device performance.
+          </div>
+
+          <div>
+            <strong>What this work provides:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• PC imaging as a direct spatial diagnostic for extraction/transport limitations.</li>
+              <li>• Clear visualization of non-uniformity to guide interpretation and optimization.</li>
+              <li>• A complementary modality alongside PL/optical maps for multi-physics understanding.</li>
+            </ul>
+          </div>
+
+          <div>
+            <strong>My contributions (high level):</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• Supported the acquisition/processing pipeline and produced consistent PC maps for analysis.</li>
+              <li>• Focus on practical reliability: repeatable measurements, stable preprocessing, and QC.</li>
+            </ul>
+          </div>
+        </div>
+      ),
+    },
+{
+      title: "ml-IM2PM: Machine Learning Regression for IM-2PM — Postdoc",
+      subtitle: "Interpretable ML for extracting recombination parameters from modulated two-photon microscopy.",
+      thumbSrc: "/work/ml-im2pm-thumb.jpg",
+      imageAlt: "ml-IM2PM preview",
+      badge: "Paper",
+      introPoints: [
+        "Replaced slow/manual fitting with supervised regression using modulation-domain features.",
+        "End-to-end pipeline: preprocessing → training → evaluation → validation.",
+        "Designed for repeated use and practical debugging (not a one-off demo).",
+      ],
+      tags: ["Python", "scikit-learn", "Signal processing", "Validation"],
+      links: [{ label: "Paper", href: "https://pubs.acs.org/doi/full/10.1021/acsphotonics.3c01523" }],
+      references: [{ label: "ACS Photonics (2024)", href: "https://pubs.acs.org/doi/full/10.1021/acsphotonics.3c01523" }],
+      details: (
+        <div className="space-y-4">
+          <div>
+            <strong>Problem:</strong> Manual fitting of IM-2PM signals is slow, sensitive to initialization, and hard to
+            scale across large imaging datasets.
+          </div>
+
+          <div>
+            <strong>What I built:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• Supervised regression mapping modulation harmonics/features → physical parameters.</li>
+              <li>• Preprocessing + standardized feature extraction + reproducible evaluation.</li>
+              <li>• Validation routines and sanity checks to ensure interpretability and detect failure modes.</li>
+            </ul>
+          </div>
+
+          <div>
+            <strong>Impact / Significance:</strong>
+            <ul className="mt-1 space-y-1">
+              <li>• Made parameter extraction scalable and more robust across experimental conditions.</li>
+              <li>• Provided a foundation for later AI-enhanced functional imaging workflows.</li>
+            </ul>
+          </div>
+        </div>
+      ),
+    },
     {
       title: "AI-Enhanced High-Resolution Functional Imaging (IM-2PM) — Postdoc",
       subtitle:
@@ -374,10 +551,9 @@ export default function Home() {
     {
       title: "Deep Learning Super-Resolution for IM-2PM Functional Imaging — Postdoc",
       subtitle:
-        "CNN-based super-resolution to enhance functional microscopy maps under SNR and acquisition-time constraints (unpublished).",
+        "CNN-based super-resolution to enhance functional microscopy maps under SNR and acquisition-time constraints.",
       thumbSrc: "/work/sr-thumb.jpg",
       imageAlt: "Super-resolution preview",
-      badge: "Unpublished",
       introPoints: [
         "Paired LR→HR reconstruction for functional microscopy maps (U-Net style).",
         "Guardrails to reduce hallucination: structure consistency + sanity checks.",
@@ -413,46 +589,7 @@ export default function Home() {
       ),
     },
 
-    {
-      title: "ml-IM2PM: Machine Learning Regression for IM-2PM — PhD",
-      subtitle: "Interpretable ML for extracting recombination parameters from modulated two-photon microscopy.",
-      thumbSrc: "/work/ml-im2pm-thumb.jpg",
-      imageAlt: "ml-IM2PM preview",
-      badge: "Paper",
-      introPoints: [
-        "Replaced slow/manual fitting with supervised regression using modulation-domain features.",
-        "End-to-end pipeline: preprocessing → training → evaluation → validation.",
-        "Designed for repeated use and practical debugging (not a one-off demo).",
-      ],
-      tags: ["Python", "scikit-learn", "Signal processing", "Validation"],
-      links: [{ label: "Paper", href: "https://pubs.acs.org/doi/full/10.1021/acsphotonics.3c01523" }],
-      references: [{ label: "ACS Photonics (2024)", href: "https://pubs.acs.org/doi/full/10.1021/acsphotonics.3c01523" }],
-      details: (
-        <div className="space-y-4">
-          <div>
-            <strong>Problem:</strong> Manual fitting of IM-2PM signals is slow, sensitive to initialization, and hard to
-            scale across large imaging datasets.
-          </div>
-
-          <div>
-            <strong>What I built:</strong>
-            <ul className="mt-1 space-y-1">
-              <li>• Supervised regression mapping modulation harmonics/features → physical parameters.</li>
-              <li>• Preprocessing + standardized feature extraction + reproducible evaluation.</li>
-              <li>• Validation routines and sanity checks to ensure interpretability and detect failure modes.</li>
-            </ul>
-          </div>
-
-          <div>
-            <strong>Impact / Significance:</strong>
-            <ul className="mt-1 space-y-1">
-              <li>• Made parameter extraction scalable and more robust across experimental conditions.</li>
-              <li>• Provided a foundation for later AI-enhanced functional imaging workflows.</li>
-            </ul>
-          </div>
-        </div>
-      ),
-    },
+    
 
     {
       title: "LIBS + Machine Learning for Quantitative Elemental Analysis — MSc",
@@ -532,10 +669,10 @@ export default function Home() {
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-                Imaging · Machine Learning · Scientific Software
+                Optical Imaging Systems · ML-assisted Analysis · Software Engineering
               </h1>
               <div className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                Lund, Sweden · Open to roles in imaging / ML / scientific software
+                Lund, Sweden · Open to roles in optical imaging / ML / scientific software
               </div>
             </div>
 
@@ -547,10 +684,11 @@ export default function Home() {
           </div>
 
           <p className="text-lg leading-8 text-zinc-700 dark:text-zinc-300">
-            I am a scientific software engineer with a Ph.D. in Chemical Physics and nearly a decade of experience at
-            Lund University. I build reliable end-to-end systems bridging nonlinear optical imaging, machine learning,
-            and engineering practices—from instrument control and data acquisition to model training, validation, and
-            long-term maintainability.
+              I build reliable optical imaging systems and analysis software. Over nearly a decade at Lund University,
+              I developed intensity-modulated nonlinear microscopy (IM-2PM) workflows—from instrument control
+              and synchronized acquisition to signal processing, modeling, and ML-assisted parameter inference.
+              My focus is turning complex experimental pipelines into maintainable tools that produce consistent results
+              and are easy to validate and debug.
           </p>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
